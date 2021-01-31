@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>CJ</Authors>
+    <Company>上海鹿彼网络科技有限公司</Company>
+    <AssemblyName>EventLogging</AssemblyName>
+    <RootNamespace>EventLogging</RootNamespace>
+    <PackageId>EventLogging</PackageId>
+    <Version>1.0.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.8" />
+  </ItemGroup>
+</Project>
