@@ -10,6 +10,8 @@ namespace HttpLogger
         public string RequestQueryString { get; }
 
         public string UserAgent { get; }
+        
+        public string Referer { get; }
 
         public string[] HttpXForwardedFor { get; }
 
@@ -36,7 +38,7 @@ namespace HttpLogger
         public string RequestId { get; }
 
         public EventContext(string requestMethod, string requestQueryString, 
-            string userAgent, string[] httpXForwardedFor,
+            string userAgent, string referer, string[] httpXForwardedFor,
             string requestContentType, string host, int port,
             string protocol, bool isHttps, long requestBodyBytesSent,
             string requestPath, string remoteAddr, DateTime requestedAt,
@@ -45,6 +47,7 @@ namespace HttpLogger
             RequestMethod = requestMethod;
             RequestQueryString = requestQueryString;
             UserAgent = userAgent;
+            Referer = referer;
             HttpXForwardedFor = httpXForwardedFor;
             RequestContentType = requestContentType;
             Host = host;

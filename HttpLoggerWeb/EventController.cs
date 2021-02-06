@@ -11,17 +11,25 @@ namespace HttpLoggerWeb
     [ApiController]
     public class EventController : ControllerBase
     {
-        private readonly NetCoreHttpLaunch launch;
+        private readonly NetCoreHttpLaunch _launch;
+
+        private readonly INetCoreHttpEventLaunch _proxyLaunch = new NetCoreHttpProxyLaunch("https://localhost:5001/api/event");
 
         public EventController(NetCoreHttpLaunch launch)
         {
-            this.launch = launch;
+            _launch = launch;
         }
 
         [HttpPost]
         public async Task Post()
         {
-            await launch.EmitAsync(Request);
+            await _launch.Emit(Request);
+        }
+
+        [HttpPost("proxy")]
+        public async Task Proxy()
+        {
+            await _proxyLaunch.Emit(Request);
         }
     }
 }

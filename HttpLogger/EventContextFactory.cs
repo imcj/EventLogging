@@ -13,14 +13,17 @@ namespace HttpLogger
             var request = context.Request;
             var headers = request.Headers;
 
-            headers.TryGetValue("User-Agent", out StringValues userAgent);
+            headers.TryGetValue("User-Agent", out var userAgent);
             var hasHttpXForwardedFor = headers.TryGetValue("X-Forwarded-For", out StringValues httpXForwardedFor);
             var hasContentType = headers.TryGetValue("Content-Type", out StringValues contentType);
+
+            headers.TryGetValue("Referer", out var referer);
 
             return new EventContext(
                 request.Method,
                 request.QueryString.ToString(),
                 userAgent.ToString(),
+                referer.ToString(),
                 hasHttpXForwardedFor ? httpXForwardedFor.ToArray() : new string[] { },
                 hasContentType ? contentType.ToString() : "",
                 context.Connection.LocalIpAddress.ToString(),

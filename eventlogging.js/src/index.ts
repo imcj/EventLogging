@@ -1,3 +1,3 @@
 import EventLogging from "./EventLogging";
 
-EventLogging();
+export default EventLogging;

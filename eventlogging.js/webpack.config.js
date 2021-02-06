@@ -16,8 +16,12 @@ module.exports = {
     extensions: [ '.tsx', '.ts', '.js' ],
   },
   output: {
-    filename: 'eventlogging.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
+    // globalObject: 'this',
+    libraryTarget: `umd`,
+    library: "eventlogging",
+    libraryExport: "default"
   },
   plugins: [
     new CopyPlugin({
@@ -26,5 +30,14 @@ module.exports = {
       ],
     }),
   ],
-
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    proxy: {
+      '/api': {
+        target: 'https://localhost:5001',
+        secure: false,
+        // pathRewrite: {'^/api' : ''}
+      }
+    }
+  }
 };

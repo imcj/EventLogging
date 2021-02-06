@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,7 +26,11 @@ namespace HttpLoggerWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(_ => new NetCoreHttpLaunch(Environment.CurrentDirectory, "httplogger"));
+            var directory = Environment.CurrentDirectory;
+            const string filename = "eventlogging";
+            Console.WriteLine($"Logging file path {Path.Combine(directory, filename)}.");
+            
+            services.AddSingleton(_ => new NetCoreHttpLaunch(directory, filename));
             services.AddRazorPages();
         }
 

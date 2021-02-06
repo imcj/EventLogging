@@ -3,6 +3,7 @@ import KeepLiveTrackingEvent from "./TrackingEvent/KeepLiveTrackingEvent";
 import Watcher from "./Watcher";
 import MouseWatcher from "./Watcher/MouseWatcher";
 import ScrollWatcher from "./Watcher/ScrollWatcher";
+import ExceptionTrackingEvent from "./TrackingEvent/ExceptionEvent";
 
 export default class Track {
 
@@ -10,14 +11,10 @@ export default class Track {
 
   events: TrackingEvent[];
 
-  watchers: Watcher[] = [new MouseWatcher(this), new ScrollWatcher(this)];
+  watchers: Watcher[] = [];
 
   private constructor() {
     this.events = [];
-
-    setInterval(() => {
-      this.events.push(new KeepLiveTrackingEvent());
-    }, 500);
   }
 
   public add(event: TrackingEvent): void {
@@ -29,6 +26,10 @@ export default class Track {
     this.events = [];
 
     return copied;
+  }
+
+  captureException(error: Error) {
+    this.add(new ExceptionTrackingEvent(error.message, "", 0, 0, error, error.stack));
   }
 
   async timeout(seconds: number): Promise<void> {
