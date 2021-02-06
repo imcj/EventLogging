@@ -18,7 +18,7 @@ namespace HttpLogger.EventLaunch
             this.directory = directory;
             this.filename = filename;
 
-            this.Start();
+            Start();
         }
 
         protected override async Task Consume(EventContext context)
@@ -34,12 +34,9 @@ namespace HttpLogger.EventLaunch
         // TODO: 支持文件分割
         protected FileStream CreateFileStream()
         {
-            if (null == Persistence)
-            {
-                var filePath = Path.Combine(directory, $"{filename}.json");
-                var fileMode = FileMode.OpenOrCreate | FileMode.Append;
-                Persistence = new FileStream(filePath, fileMode);
-            }
+            if (null != Persistence) return Persistence;
+            var filePath = Path.Combine(directory, $"{filename}.json");
+            Persistence = new FileStream(filePath, FileMode.Append, FileAccess.Write);
 
             return Persistence;
         }
