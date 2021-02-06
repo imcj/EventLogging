@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 
 namespace HttpLogger.Adapter
 {
-    public class NetCoreHttpLaunch
+    public class NetCoreHttpLaunch : INetCoreHttpEventLaunch
     {
         private readonly HttpAssembler _assembler = new HttpAssembler();
 
         private readonly IEventLaunch _eventLaunch;
 
-        public NetCoreHttpLaunch(string directory, string filename)
+        public NetCoreHttpLaunch(IEventLaunch launch)
         {
-            _eventLaunch = new FileEventLaunch(directory, filename);
+            _eventLaunch = launch;
         }
 
         public async Task Emit(HttpRequest request)

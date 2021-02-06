@@ -35,7 +35,7 @@ namespace HttpLogger
                 request.HttpContext.Connection.RemoteIpAddress.ToString(),
                 DateTime.UtcNow,
                 payload
-            ); ;
+            );
         }
 
         public EventContext Create(HttpContext context) => Create(context, null);

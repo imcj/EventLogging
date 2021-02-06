@@ -8,6 +8,7 @@
     <RootNamespace>EventLogging</RootNamespace>
     <PackageId>EventLogging</PackageId>
     <Version>1.0.1</Version>
+    <PackageVersion>1.0.16</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>

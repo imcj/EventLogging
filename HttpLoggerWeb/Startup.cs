@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using HttpLogger.EventLaunch;
 
 namespace HttpLoggerWeb
 {
@@ -26,11 +27,16 @@ namespace HttpLoggerWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddHttpContextAccessor();
+            
             var directory = Environment.CurrentDirectory;
             const string filename = "eventlogging";
             Console.WriteLine($"Logging file path {Path.Combine(directory, filename)}.");
+            var fileEventLaunch = new FileEventLaunch(directory, filename);
             
-            services.AddSingleton(_ => new NetCoreHttpLaunch(directory, filename));
+            services.AddSingleton(_ => fileEventLaunch);
+            services.AddScoped(_ => new NetCoreHttpLaunch(fileEventLaunch));
             services.AddRazorPages();
         }
 
