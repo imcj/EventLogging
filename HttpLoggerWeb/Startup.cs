@@ -36,7 +36,7 @@ namespace HttpLoggerWeb
             var fileEventLaunch = new FileEventLaunch(directory, filename);
             
             services.AddSingleton(_ => fileEventLaunch);
-            services.AddScoped(_ => new NetCoreHttpLaunch(fileEventLaunch));
+            services.AddScoped<INetCoreHttpEventLaunch>(_ => new NetCoreHttpEventLaunch(fileEventLaunch));
             services.AddRazorPages();
         }
 

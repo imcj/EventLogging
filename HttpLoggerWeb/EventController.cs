@@ -14,20 +14,20 @@ namespace HttpLoggerWeb
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         
-        private readonly NetCoreHttpLaunch _launch;
+        private readonly NetCoreHttpEventLaunch _eventLaunch;
 
-        private readonly INetCoreHttpEventLaunch _proxyLaunch = new NetCoreHttpProxyLaunch("https://localhost:5001/api/event");
+        private readonly INetCoreHttpEventLaunch _proxyLaunch = new NetCoreHttpProxyEventLaunch("https://localhost:5001/api/event");
 
-        public EventController(NetCoreHttpLaunch launch, IHttpContextAccessor httpContextAccessor)
+        public EventController(NetCoreHttpEventLaunch eventLaunch, IHttpContextAccessor httpContextAccessor)
         {
-            _launch = launch;
+            _eventLaunch = eventLaunch;
             _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpPost]
         public async Task Post()
         {
-            await _launch.Emit(_httpContextAccessor.HttpContext.Request);
+            await _eventLaunch.Emit(_httpContextAccessor.HttpContext.Request);
         }
 
         [HttpPost("proxy")]

@@ -1,17 +1,16 @@
-﻿using HttpLogger.EventLaunch;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace HttpLogger.Adapter
 {
-    public class NetCoreHttpLaunch : INetCoreHttpEventLaunch
+    public class NetCoreHttpEventLaunch : INetCoreHttpEventLaunch
     {
         private readonly HttpAssembler _assembler = new HttpAssembler();
 
         private readonly IEventLaunch _eventLaunch;
 
-        public NetCoreHttpLaunch(IEventLaunch launch)
+        public NetCoreHttpEventLaunch(IEventLaunch launch)
         {
             _eventLaunch = launch;
         }

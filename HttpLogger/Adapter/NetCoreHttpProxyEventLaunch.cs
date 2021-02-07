@@ -7,13 +7,13 @@ using Microsoft.Net.Http.Headers;
 
 namespace HttpLogger.Adapter
 {
-    public class NetCoreHttpProxyLaunch : INetCoreHttpEventLaunch
+    public class NetCoreHttpProxyEventLaunch : INetCoreHttpEventLaunch
     {
         private readonly HttpClient _httpClient = new HttpClient();
 
         private readonly string _upstream;
 
-        public NetCoreHttpProxyLaunch(string upstream)
+        public NetCoreHttpProxyEventLaunch(string upstream)
         {
             _upstream = upstream;
         }
