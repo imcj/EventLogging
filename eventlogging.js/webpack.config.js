@@ -16,7 +16,7 @@ module.exports = {
     extensions: [ '.tsx', '.ts', '.js' ],
   },
   output: {
-    filename: '[name].js',
+    filename: 'eventlogging.js',
     path: path.resolve(__dirname, 'dist'),
     // globalObject: 'this',
     libraryTarget: `umd`,
@@ -24,11 +24,11 @@ module.exports = {
     libraryExport: "default"
   },
   plugins: [
-    new CopyPlugin({
-      patterns: [
-        { from: "./sample/index.html", to: "./dist/index.html" }
-      ],
-    }),
+    // new CopyPlugin({
+    //   patterns: [
+    //     { from: "./sample/index.html", to: "./dist/index.html" }
+    //   ],
+    // }),
   ],
   devServer: {
     contentBase: path.join(__dirname, 'dist'),

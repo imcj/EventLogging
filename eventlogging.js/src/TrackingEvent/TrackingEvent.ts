@@ -26,6 +26,8 @@ export default class TrackingEvent {
 
   trackingId: TrackingId = new TrackingId();
 
+  addition: any = null;
+
   public constructor() {
     this.orientationAngle = window.screen.orientation.angle;
     this.orientationType = window.screen.orientation.type;

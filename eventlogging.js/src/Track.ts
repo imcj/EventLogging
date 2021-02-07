@@ -4,6 +4,7 @@ import Watcher from "./Watcher";
 import MouseWatcher from "./Watcher/MouseWatcher";
 import ScrollWatcher from "./Watcher/ScrollWatcher";
 import ExceptionTrackingEvent from "./TrackingEvent/ExceptionEvent";
+import LoggingTrackingEvent from "./TrackingEvent/LoggingTrackingEvent";
 
 export default class Track {
 
@@ -13,6 +14,8 @@ export default class Track {
 
   watchers: Watcher[] = [];
 
+  private limit: number = 100_000_000;
+
   private constructor() {
     this.events = [];
   }
@@ -21,15 +24,33 @@ export default class Track {
     this.events.push(event);
   }
 
-  removeAll(): TrackingEvent[] {
+  public addBack(events: TrackingEvent[]): void {
+    let back = events.concat(this.events);
+    if (back.length > this.limit) {
+      back = back.slice(-this.limit);
+    }
+    this.events = back;
+  }
+
+  removeAll(addition: any): TrackingEvent[] {
     const copied = this.events;
     this.events = [];
+
+    if (null !== addition) {
+      copied.forEach(event => {
+        event.addition = addition;
+      });
+    }
 
     return copied;
   }
 
   captureException(error: Error) {
     this.add(new ExceptionTrackingEvent(error.message, "", 0, 0, error, error.stack));
+  }
+
+  log(message: string, context: any | null = null) {
+    this.add(new LoggingTrackingEvent(message, context))
   }
 
   async timeout(seconds: number): Promise<void> {

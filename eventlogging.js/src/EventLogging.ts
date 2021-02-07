@@ -7,12 +7,14 @@ import ExceptionWatcher from "./Watcher/ExceptionWatcher";
 import KeepLiveWatcher from "./Watcher/KeepLiveWatcher";
 
 export default async function EventLogging(options?: Options|null): Promise<void> {
+  console.debug("event logging initializing");
   const track = Track.instance;
 
   if (options == null) {
     options = {
       url: null,
       watchers: null,
+      addition: null,
     }
   }
 
@@ -25,16 +27,24 @@ export default async function EventLogging(options?: Options|null): Promise<void
   ];
   track.watchers = options.watchers;
 
+  if (options.listener) {
+    options.listener(track);
+  }
+
   while (true) {
-    const events = track.removeAll();
+    const events = track.removeAll(options.addition);
     if (events.length > 0) {
-      fetchPolyfill(options.url, {
+      const response = await fetchPolyfill(options.url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(events)
       });
+
+      if (response.status < 200 || response.status > 299) {
+        track.addBack(events);
+      }
     }
     await track.timeout(2);
   }
