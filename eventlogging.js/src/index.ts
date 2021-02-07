@@ -1,4 +1,6 @@
 import EventLogging from "./EventLogging";
+import Track from "./Track";
+
 
 
 // example
@@ -22,4 +24,7 @@ import EventLogging from "./EventLogging";
 //     }
 // }).then(() => {})
 
+export {
+    Track
+};
 export default EventLogging;
